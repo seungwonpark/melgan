@@ -1,5 +1,12 @@
-# melgan
-Unofficial PyTorch implementation of MelGAN vocoder (work in progress)
+# MelGAN
+Unofficial PyTorch implementation of [MelGAN vocoder](https://arxiv.org/abs/1910.06711) (work in progress, details coming soon)
+
+![](./assets/gd.png)
+
+# Implementation Authors
+
+- [Seungwon Park](http://swpark.me) @ MINDsLab (yyyyy@snu.ac.kr, swpark@mindslab.ai)
+- Myunchul Joe @ MINDsLab
 
 # License
 
