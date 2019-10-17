@@ -1,0 +1,7 @@
+librosa
+matplotlib
+numpy
+scipy
+torch==1.3.0
+tqdm
+pyyaml

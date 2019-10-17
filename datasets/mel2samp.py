@@ -37,15 +37,6 @@ from utils.stft import TacotronSTFT
 
 MAX_WAV_VALUE = 32768.0
 
-def files_to_list(filename):
-    """
-    Takes a text file of filenames and makes a list of filenames
-    """
-    with open(filename, encoding='utf-8') as f:
-        files = f.readlines()
-
-    files = [f.rstrip() for f in files]
-    return files
 
 def load_wav_to_torch(full_path):
     """
@@ -60,14 +51,15 @@ class Mel2Samp(torch.utils.data.Dataset):
     This is the main class that calculates the spectrogram and returns the
     spectrogram, audio pair.
     """
-    def __init__(self, training_files, segment_length, filter_length,
+    def __init__(self, root_path, n_mel_channels, segment_length, filter_length,
                  hop_length, win_length, sampling_rate, mel_fmin, mel_fmax):
-        self.audio_files = files_to_list(training_files)
+        self.audio_files = glob.glob(os.path.join(root_path, '**', '*.wav'), recursive=True)
         random.seed(1234)
         random.shuffle(self.audio_files)
         self.stft = TacotronSTFT(filter_length=filter_length,
                                  hop_length=hop_length,
                                  win_length=win_length,
+                                 n_mel_channels=n_mel_channels,
                                  sampling_rate=sampling_rate,
                                  mel_fmin=mel_fmin, mel_fmax=mel_fmax)
         self.segment_length = segment_length

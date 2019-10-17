@@ -1,5 +1,5 @@
 # melgan
-Unofficial PyTorch implementation of MelGAN vocoder
+Unofficial PyTorch implementation of MelGAN vocoder (work in progress)
 
 # License
 
