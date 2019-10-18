@@ -41,10 +41,15 @@ if __name__ == '__main__':
 
     writer = MyWriter(hp, log_dir)
 
+    assert hp.audio.segment_length % hp.audio.hop_length == 0, \
+        'hp.audio.segment_length must be divisible by hp.audio.hop_length, got %d, %d' % \
+        (hp.audio.segment_length, hp.audio.hop_length)
+    assert hp.audio.hop_length == 256, \
+        'hp.audio.hop_length must be equal to 256, got %d' % hp.audio.hop_length
     assert hp.data.train != '' and hp.data.validation != '', \
         'hp.data.train and hp.data.validation can\'t be empty: please fix %s' % args.config
 
-    trainset = create_dataloader(hp, args, True)
-    valset = create_dataloader(hp, args, False)
+    trainloader = create_dataloader(hp, args, True)
+    valloader = create_dataloader(hp, args, False)
 
-    train(args, pt_dir, args.checkpoint_path, trainset, valset, writer, logger, hp, hp_str)
+    train(args, pt_dir, args.checkpoint_path, trainloader, valloader, writer, logger, hp, hp_str)

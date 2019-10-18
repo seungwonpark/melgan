@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from . import ResStack
+from .res_stack import ResStack
 #from res_stack import ResStack
 
 

@@ -3,6 +3,7 @@ data: # root path of train/validation data (in absolute path)
   validation: ''
 ---
 train:
+  rep_discriminator: 1
   num_workers: 32
   batch_size: 16
   optimizer: 'adam'
@@ -13,13 +14,16 @@ train:
 ---
 audio:
   n_mel_channels: 80
-  segment_length: 16000
+  segment_length: 16384
   filter_length: 1024
   hop_length: 256 # WARNING: this can't be changed.
   win_length: 1024
   sampling_rate: 22050
   mel_fmin: 0.0
   mel_fmax: 8000.0
+---
+model:
+  feat_match: 10.0
 ---
 log:
   summary_interval: 1

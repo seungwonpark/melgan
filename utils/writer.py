@@ -1,4 +1,3 @@
-import random
 from torch.utils.tensorboard import SummaryWriter
 
 from .plotting import plot_waveform_to_numpy
