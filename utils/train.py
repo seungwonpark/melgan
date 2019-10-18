@@ -55,6 +55,9 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
         model_g.train()
         model_d.train()
         for epoch in itertools.count(init_epoch+1):
+            with torch.no_grad():
+                validate(hp, args, model_g, model_d, valloader, writer, step)
+
             loader = tqdm.tqdm(trainloader, desc='Loading train data')
             for mel, audio in loader:
                 mel = mel.cuda()
@@ -117,9 +120,6 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
                     'githash': githash,
                 }, save_path)
                 logger.info("Saved checkpoint to: %s" % save_path)
-
-            with torch.no_grad():
-                validate(hp, args, model_g, model_d, valloader, writer, step)
 
     except Exception as e:
         logger.info("Exiting due to exception: %s" % e)

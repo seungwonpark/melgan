@@ -15,8 +15,8 @@ def validate(hp, args, generator, discriminator, valloader, writer, step):
         audio = audio.cuda()
 
         # generator
-        fake_audio = generator(mel)[:, :, :audio.size(1)]
-        disc_fake = discriminator(fake_audio)
+        fake_audio = generator(mel)
+        disc_fake = discriminator(fake_audio[:, :, :audio.size(2)])
         disc_real = discriminator(audio)
         loss_g = 0.0
         loss_d = 0.0
