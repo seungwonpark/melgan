@@ -30,8 +30,8 @@ def validate(hp, args, generator, discriminator, valloader, writer, step):
         loss_g_sum += loss_g.item()
         loss_d_sum += loss_d.item()
 
-    loss_g_avg = loss_g_sum / len(valloader.dataset)
-    loss_d_avg = loss_d_sum / len(valloader.dataset)
+    loss_g_avg = loss_g_sum / len(valloader.dataset) * hp.train.batch_size
+    loss_d_avg = loss_d_sum / len(valloader.dataset) * hp.train.batch_size
 
     audio = audio[0][0].cpu().detach().numpy()
     fake_audio = fake_audio[0][0].cpu().detach().numpy()
