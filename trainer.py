@@ -41,9 +41,6 @@ if __name__ == '__main__':
 
     writer = MyWriter(hp, log_dir)
 
-    assert hp.audio.segment_length % hp.audio.hop_length == 0, \
-        'hp.audio.segment_length must be divisible by hp.audio.hop_length, got %d, %d' % \
-        (hp.audio.segment_length, hp.audio.hop_length)
     assert hp.audio.hop_length == 256, \
         'hp.audio.hop_length must be equal to 256, got %d' % hp.audio.hop_length
     assert hp.data.train != '' and hp.data.validation != '', \

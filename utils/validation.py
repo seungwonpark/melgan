@@ -15,16 +15,17 @@ def validate(hp, args, generator, discriminator, valloader, writer, step):
         audio = audio.cuda()
 
         # generator
-        fake_audio = generator(mel)
+        fake_audio = generator(mel)[:, :, :hp.audio.segment_length]
         disc_fake = discriminator(fake_audio)
         disc_real = discriminator(audio)
         loss_g = 0.0
         loss_d = 0.0
-        for (feat_fake, score_fake), (feat_real, score_real) in zip(disc_fake, disc_real):
-            loss_g += torch.mean(torch.sum(torch.pow(score_fake - 1.0, 2), dim=[1, 2]))
-            loss_g += hp.model.feat_match * torch.mean(torch.abs(feat_real - feat_fake))
-            loss_d += torch.mean(torch.sum(torch.pow(score_real - 1.0, 2), dim=[1, 2]))
-            loss_d += torch.mean(torch.sum(torch.pow(score_fake, 2), dim=[1, 2]))
+        for (feats_fake, score_fake), (feats_real, score_real) in zip(disc_fake, disc_real):
+            loss_g += torch.mean(torch.pow(score_fake - 1.0, 2))
+            for feat_f, feat_r in zip(feats_fake, feats_real):
+                loss_g += hp.model.feat_match * torch.mean(torch.abs(feat_f - feat_r))
+            loss_d += torch.mean(torch.pow(score_real - 1.0, 2))
+            loss_d += torch.mean(torch.pow(score_fake, 2))
 
         loss_g_sum += loss_g.item()
         loss_d_sum += loss_d.item()
@@ -32,8 +33,8 @@ def validate(hp, args, generator, discriminator, valloader, writer, step):
     loss_g_avg = loss_g_sum / len(valloader.dataset)
     loss_d_avg = loss_d_sum / len(valloader.dataset)
 
-    audio = audio[0].cpu().detach().numpy()
-    fake_audio = fake_audio[0].cpu().detach().numpy()
+    audio = audio[0][0].cpu().detach().numpy()
+    fake_audio = fake_audio[0][0].cpu().detach().numpy()
 
     writer.log_validation(loss_g_avg, loss_d_avg, audio, fake_audio, step)
 

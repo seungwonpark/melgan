@@ -2,6 +2,8 @@ librosa
 matplotlib
 numpy
 scipy
-torch==1.3.0
+tensorboardX
+torch==1.0.0
 tqdm
+pillow
 pyyaml

@@ -1,7 +1,34 @@
 # MelGAN
-Unofficial PyTorch implementation of [MelGAN vocoder](https://arxiv.org/abs/1910.06711) (work in progress, details coming soon)
+Unofficial PyTorch implementation of [MelGAN vocoder](https://arxiv.org/abs/1910.06711) (training in progress)
 
 ![](./assets/gd.png)
+
+## Prerequisites
+
+Tested on Python 3.6
+```bash
+pip install -r requirements.txt
+```
+
+## Prepare Dataset
+
+- Download dataset for training. This can be any wav files with sample rate 22050Hz. (i.e. LJSpeech was used in paper)
+- preprocess: `python preprocess.py -c config/default.yaml -d [data's root path]`
+- Edit configuration `yaml` file
+
+## Train & Tensorboard
+
+- `python trainer.py -c [config yaml file] -n [name of the run]`
+- `tensorboard --logdir logs/`
+
+## Inference
+
+coming soon
+
+## Results
+
+coming soon
+
 
 # Implementation Authors
 

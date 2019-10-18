@@ -21,7 +21,7 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
         lr=hp.train.adam.lr, betas=(hp.train.adam.beta1, hp.train.adam.beta2))
     optim_d = torch.optim.Adam(model_d.parameters(),
         lr=hp.train.adam.lr, betas=(hp.train.adam.beta1, hp.train.adam.beta2))
-    
+
     githash = get_commit_hash()
 
     init_epoch = -1
@@ -62,13 +62,14 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
 
                 # generator
                 optim_g.zero_grad()
-                fake_audio = model_g(mel)
+                fake_audio = model_g(mel)[:, :, :hp.audio.segment_length]
                 disc_fake = model_d(fake_audio)
                 disc_real = model_d(audio)
                 loss_g = 0.0
-                for (feat_fake, score_fake), (feat_real, _) in zip(disc_fake, disc_real):
-                    loss_g += torch.mean(torch.sum(torch.pow(score_fake - 1.0, 2), dim=[1, 2]))
-                    loss_g += hp.model.feat_match * torch.mean(torch.abs(feat_real - feat_fake))
+                for (feats_fake, score_fake), (feats_real, _) in zip(disc_fake, disc_real):
+                    loss_g += torch.mean(torch.pow(score_fake - 1.0, 2))
+                    for feat_f, feat_r in zip(feats_fake, feats_real):
+                        loss_g += hp.model.feat_match * torch.mean(torch.abs(feat_f - feat_r))
 
                 loss_g.backward()
                 optim_g.step()
@@ -82,13 +83,14 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
                     disc_real = model_d(audio)
                     loss_d = 0.0
                     for (_, score_fake), (_, score_real) in zip(disc_fake, disc_real):
-                        loss_d += torch.mean(torch.sum(torch.pow(score_real - 1.0, 2), dim=[1, 2]))
-                        loss_d += torch.mean(torch.sum(torch.pow(score_fake, 2), dim=[1, 2]))
+                        loss_d += torch.mean(torch.pow(score_real - 1.0, 2))
+                        loss_d += torch.mean(torch.pow(score_fake, 2))
 
                     loss_d.backward()
                     optim_d.step()
                     loss_d_sum += loss_d
 
+                step += 1
                 # logging
                 loss_g = loss_g.item()
                 loss_d_avg = loss_d_sum / hp.train.rep_discriminator
@@ -101,19 +103,20 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
                     writer.log_training(loss_g, loss_d_avg, step)
                     loader.set_description("g %.04f d %.04f | step %d" % (loss_g, loss_d_avg, step))
 
-            save_path = os.path.join(pt_dir, '%s_%s_%03d.pt'
-                % (args.name, githash, epoch))
-            torch.save({
-                'model_g': model_g.state_dict(),
-                'model_d': model_d.state_dict(),
-                'optim_g': optim_g.state_dict(),
-                'optim_d': optim_d.state_dict(),
-                'step': step,
-                'epoch': epoch,
-                'hp_str': hp_str,
-                'githash': githash,
-            }, save_path)
-            logger.info("Saved checkpoint to: %s" % save_path)
+            if epoch % hp.log.save_interval == 0:
+                save_path = os.path.join(pt_dir, '%s_%s_%03d.pt'
+                    % (args.name, githash, epoch))
+                torch.save({
+                    'model_g': model_g.state_dict(),
+                    'model_d': model_d.state_dict(),
+                    'optim_g': optim_g.state_dict(),
+                    'optim_d': optim_d.state_dict(),
+                    'step': step,
+                    'epoch': epoch,
+                    'hp_str': hp_str,
+                    'githash': githash,
+                }, save_path)
+                logger.info("Saved checkpoint to: %s" % save_path)
 
             with torch.no_grad():
                 validate(hp, args, model_g, model_d, valloader, writer, step)

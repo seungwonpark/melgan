@@ -14,7 +14,7 @@ train:
 ---
 audio:
   n_mel_channels: 80
-  segment_length: 16384
+  segment_length: 16000
   filter_length: 1024
   hop_length: 256 # WARNING: this can't be changed.
   win_length: 1024
@@ -27,5 +27,6 @@ model:
 ---
 log:
   summary_interval: 1
+  save_interval: 5
   chkpt_dir: 'chkpt'
   log_dir: 'logs'

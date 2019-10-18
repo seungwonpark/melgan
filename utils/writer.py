@@ -1,12 +1,12 @@
-from torch.utils.tensorboard import SummaryWriter
+from tensorboardX import SummaryWriter
 
 from .plotting import plot_waveform_to_numpy
 
 
 class MyWriter(SummaryWriter):
-    def __init__(self, logdir, sample_rate):
+    def __init__(self, hp, logdir):
         super(MyWriter, self).__init__(logdir)
-        self.sample_rate = sample_rate
+        self.sample_rate = hp.audio.sampling_rate
         self.is_first = True
 
     def log_training(self, g_loss, d_loss, step):
