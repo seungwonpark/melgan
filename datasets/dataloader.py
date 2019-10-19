@@ -45,5 +45,6 @@ class MelFromDisk(Dataset):
 
             audio_start = mel_start * self.hp.audio.hop_length
             audio = audio[:, audio_start:audio_start+self.hp.audio.segment_length]
-    
+
+        audio = audio + (1/32768) * torch.randn_like(audio)
         return mel, audio
