@@ -4,6 +4,7 @@ import tqdm
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import random
 import itertools
 import traceback
 
@@ -70,7 +71,7 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
                 disc_real = model_d(audio)
                 loss_g = 0.0
                 for (feats_fake, score_fake), (feats_real, _) in zip(disc_fake, disc_real):
-                    loss_g += torch.mean(torch.pow(score_fake - 1.0, 2))
+                    loss_g += torch.mean(torch.pow(score_fake - random.uniform(0.8, 1.2), 2))
                     for feat_f, feat_r in zip(feats_fake, feats_real):
                         loss_g += hp.model.feat_match * torch.mean(torch.abs(feat_f - feat_r))
 
@@ -86,8 +87,8 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
                     disc_real = model_d(audio)
                     loss_d = 0.0
                     for (_, score_fake), (_, score_real) in zip(disc_fake, disc_real):
-                        loss_d += torch.mean(torch.pow(score_real - 1.0, 2))
-                        loss_d += torch.mean(torch.pow(score_fake, 2))
+                        loss_d += torch.mean(torch.pow(score_real - random.uniform(0.8, 1.2), 2))
+                        loss_d += torch.mean(torch.pow(score_fake - random.uniform(-0.2, 0.2), 2))
 
                     loss_d.backward()
                     optim_d.step()
