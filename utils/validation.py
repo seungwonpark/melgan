@@ -36,6 +36,6 @@ def validate(hp, args, generator, discriminator, valloader, writer, step):
     audio = audio[0][0].cpu().detach().numpy()
     fake_audio = fake_audio[0][0].cpu().detach().numpy()
 
-    writer.log_validation(loss_g_avg, loss_d_avg, audio, fake_audio, step)
+    writer.log_validation(loss_g_avg, loss_d_avg, generator, discriminator, audio, fake_audio, step)
 
     torch.backends.cudnn.benchmark = True
