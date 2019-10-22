@@ -32,8 +32,9 @@ coming soon
 
 # Implementation Authors
 
-- [Seungwon Park](http://swpark.me) @ MINDsLab (yyyyy@snu.ac.kr, swpark@mindslab.ai)
-- Myunchul Joe @ MINDsLab
+- [Seungwon Park](http://swpark.me) @ MINDsLab Inc. (yyyyy@snu.ac.kr, swpark@mindslab.ai)
+- Myunchul Joe @ MINDsLab Inc.
+- [Rishikesh](https://github.com/rishikksh20) @ DeepSync Technologies Pvt Ltd.
 
 # License
 
