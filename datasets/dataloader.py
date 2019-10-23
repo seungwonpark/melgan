@@ -26,11 +26,23 @@ class MelFromDisk(Dataset):
         self.path = hp.data.train if train else hp.data.validation
         self.wav_list = glob.glob(os.path.join(self.path, '**', '*.wav'), recursive=True)
         self.mel_segment_length = hp.audio.segment_length // hp.audio.hop_length + 1
+        self.mapping = [i for i in range(len(self.wav_list))]
 
     def __len__(self):
         return len(self.wav_list)
 
     def __getitem__(self, idx):
+        if self.train:
+            idx1 = idx
+            idx2 = self.mapping[idx1]
+            return self.my_getitem(idx1), self.my_getitem(idx2)
+        else:
+            return self.my_getitem(idx)
+
+    def shuffle_mapping(self):
+        random.shuffle(self.mapping)
+
+    def my_getitem(self, idx):
         wavpath = self.wav_list[idx]
         melpath = wavpath.replace('.wav', '.mel')
         sr, audio = read_wav_np(wavpath)
