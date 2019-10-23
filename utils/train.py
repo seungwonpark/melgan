@@ -111,7 +111,7 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
                     loader.set_description("g %.04f d %.04f | step %d" % (loss_g, loss_d_avg, step))
 
             if epoch % hp.log.save_interval == 0:
-                save_path = os.path.join(pt_dir, '%s_%s_%03d.pt'
+                save_path = os.path.join(pt_dir, '%s_%s_%04d.pt'
                     % (args.name, githash, epoch))
                 torch.save({
                     'model_g': model_g.state_dict(),

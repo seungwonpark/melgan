@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700');
+body {
+   font-family: 'Roboto', Arial, sans-serif;
+}
+.paper_title {
+  font-style: italic;
+}
+.paper_date {
+  font-weight: bold;
+}
+#toc_container {
+  background: #f9f9f9 none repeat scroll 0 0;
+  border: 1px solid #aaa;
+  display: table;
+  font-size: 95%;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 8px;
+  width: auto;
+}
+.toc_title {
+  font-weight: 700;
+  font-size: 18pt;
+  text-align: left;
+}
+#toc_container ul  {
+  list-style: outside none none !important; margin-left: -40px;
+}
+h1 {
+    font-size: 2em;
+}
+h2 {
+    font-size: 1.5em;
+}
+.h2_explainer {
+  margin-bottom: 2px;
+}
+h3 {
+  font-size: 1.2em;
+  margin-bottom: 2px;
+}
+.h3_explainer {
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+.transcript {
+  font-style: italic;
+}
+.text_e2e {
+  font-style: italic;
+  color: #666666;
+  font-size: 11pt;
+}
+
+/* padding causes text to overlap buttons on e2e page */
+.text_gst {
+  font-style: italic;
+  color: #666666;
+  font-size: 11pt;
+  padding-bottom: 10px;
+  padding-top: 15px;
+}
+
+/* for e2e page */
+td.reference {
+  text-wrap: overflow;
+  min-width: 500px;
+  max-width: 500px;
+}
+td.reference button {
+  margin-left: 10px;
+}
+td.algorithm {
+  text-align: right;
+}
+#player {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+td.synthesis {
+  text-align:center;
+}
