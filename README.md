@@ -1,6 +1,12 @@
 # MelGAN
 Unofficial PyTorch implementation of [MelGAN vocoder](https://arxiv.org/abs/1910.06711) (training in progress)
 
+## Key Features
+
+- MelGAN is lighter, faster, and better at generalizing to unseen speakers than [WaveGlow](https://github.com/NVIDIA/waveglow).
+- This repository use identical mel-spectrogram function from [NVIDIA/tacotron2](https://github.com/NVIDIA/tacotron2), so this can be directly used to convert output from NVIDIA's tacotron2 into raw-audio.
+- TODO: Planning to publish pretrained model via [PyTorch Hub](https://pytorch.org/hub).
+
 ![](./assets/gd.png)
 
 ## Prerequisites
@@ -23,20 +29,22 @@ pip install -r requirements.txt
 
 ## Inference
 
-coming soon
+- `python inference.py -p [checkpoint path] -i [input mel path]`
 
 ## Results
 
-coming soon
+See audio samples at:  http://swpark.me/melgan/.
+
+The loss curve of G/D may look weird at first. TODO: add tensorboard image here
 
 
-# Implementation Authors
+## Implementation Authors
 
 - [Seungwon Park](http://swpark.me) @ MINDsLab Inc. (yyyyy@snu.ac.kr, swpark@mindslab.ai)
 - Myunchul Joe @ MINDsLab Inc.
 - [Rishikesh](https://github.com/rishikksh20) @ DeepSync Technologies Pvt Ltd.
 
-# License
+## License
 
 BSD 3-Clause License.
 
@@ -44,7 +52,7 @@ BSD 3-Clause License.
 - [datasets/mel2samp.py](./datasets/mel2samp.py) from https://github.com/NVIDIA/waveglow (BSD 3-Clause License)
 - [utils/hparams.py](./utils/hparams.py) from https://github.com/HarryVolek/PyTorch_Speaker_Verification (No License specified)
 
-# Useful resources
+## Useful resources
 
 - [How to Train a GAN? Tips and tricks to make GANs work](https://github.com/soumith/ganhacks) by Soumith Chintala
 - [jaywalnut310/MelGAN-Pytorch](https://github.com/jaywalnut310/MelGAN-Pytorch) by Jaehyeon Kim
