@@ -55,6 +55,7 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
     try:
         model_g.train()
         model_d.train()
+        feat_match = torch.tensor(hp.model.feat_match)
         for epoch in itertools.count(init_epoch+1):
             if epoch % hp.log.validation_interval == 0:
                 with torch.no_grad():
@@ -74,7 +75,7 @@ def train(args, pt_dir, chkpt_path, trainloader, valloader, writer, logger, hp, 
                 disc_fake = model_d(fake_audio)
                 disc_real = model_d(audioG)
 
-                loss_g = get_loss_g(hp.model.feat_match, disc_fake, disc_real)
+                loss_g = get_loss_g(feat_match, disc_fake, disc_real)
                 loss_g.backward()
                 optim_g.step()
 
