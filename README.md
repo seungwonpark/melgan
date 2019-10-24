@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ## Prepare Dataset
 
-- Download dataset for training. This can be any wav files with sample rate 22050Hz. (i.e. LJSpeech was used in paper)
+- Download dataset for training. This can be any wav files with sample rate 22050Hz. (e.g. LJSpeech was used in paper)
 - preprocess: `python preprocess.py -c config/default.yaml -d [data's root path]`
 - Edit configuration `yaml` file
 
