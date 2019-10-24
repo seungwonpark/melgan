@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from typing import List
 
 
 class Discriminator(nn.Module):
@@ -41,7 +42,7 @@ class Discriminator(nn.Module):
             we directly predict score without last sigmoid function
             since we're using Least Squares GAN (https://arxiv.org/abs/1611.04076)
         '''
-        features = list()
+        features:List[torch.Tensor] = []
         for module in self.discriminator:
             x = module(x)
             features.append(x)
