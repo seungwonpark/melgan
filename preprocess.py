@@ -3,6 +3,7 @@ import glob
 import tqdm
 import torch
 import argparse
+import numpy as np
 
 from utils.stft import TacotronSTFT
 from utils.hparams import HParam
@@ -25,6 +26,10 @@ def main(hp, args):
         assert sr == hp.audio.sampling_rate, \
             "sample rate mismatch. expected %d, got %d at %s" % \
             (hp.audio.sampling_rate, sr, wavpath)
+        
+        if len(wav) < hp.audio.segment_length + hp.audio.pad_short:
+            wav = np.pad(wav, (0, hp.audio.segment_length + hp.audio.pad_short - len(wav)), \
+                    mode='constant', constant_values=0.0)
 
         wav = torch.from_numpy(wav).unsqueeze(0)
         mel = stft.mel_spectrogram(wav)

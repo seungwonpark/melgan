@@ -2,6 +2,7 @@ import os
 import glob
 import torch
 import random
+import numpy as np
 from torch.utils.data import Dataset, DataLoader
 
 from utils.utils import read_wav_np
@@ -25,7 +26,7 @@ class MelFromDisk(Dataset):
         self.train = train
         self.path = hp.data.train if train else hp.data.validation
         self.wav_list = glob.glob(os.path.join(self.path, '**', '*.wav'), recursive=True)
-        self.mel_segment_length = hp.audio.segment_length // hp.audio.hop_length + 1
+        self.mel_segment_length = hp.audio.segment_length // hp.audio.hop_length + 2
         self.mapping = [i for i in range(len(self.wav_list))]
 
     def __len__(self):
@@ -46,6 +47,10 @@ class MelFromDisk(Dataset):
         wavpath = self.wav_list[idx]
         melpath = wavpath.replace('.wav', '.mel')
         sr, audio = read_wav_np(wavpath)
+        if len(audio) < self.hp.audio.segment_length + self.hp.audio.pad_short:
+            audio = np.pad(audio, (0, self.hp.audio.segment_length + self.hp.audio.pad_short - len(audio)), \
+                    mode='constant', constant_values=0.0)
+
         audio = torch.from_numpy(audio).unsqueeze(0)
         mel = torch.load(melpath).squeeze(0)
 
