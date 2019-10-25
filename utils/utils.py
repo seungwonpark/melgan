@@ -24,17 +24,3 @@ def read_wav_np(path):
     wav = wav.astype(np.float32)
 
     return sr, wav
-
-def cut_wav(L, wav):
-    samples = len(wav)
-    if samples < L:
-        start = random.randint(0, L - samples)
-        # if shorter than desired segment length, then let's pad with zero
-        wav = np.pad(wav, (start, L - samples - start),
-                'constant', constant_values=0.0)
-    else:
-        start = random.randint(0, samples - L)
-        wav = wav[start:start+L]
-
-    #wav /= np.max(np.abs(wav)) # skip normalizing
-    return wav
