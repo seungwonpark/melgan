@@ -1,5 +1,5 @@
 # MelGAN
-Unofficial PyTorch implementation of [MelGAN vocoder](https://arxiv.org/abs/1910.06711) (training in progress)
+Unofficial PyTorch implementation of [MelGAN vocoder](https://arxiv.org/abs/1910.06711)
 
 ## Key Features
 
@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 See audio samples at:  http://swpark.me/melgan/.
 
-The loss curve of G/D may look weird at first. TODO: add tensorboard image here
+![](./assets/lj-tensorboard.png)
 
 
 ## Implementation Authors
@@ -55,4 +55,4 @@ BSD 3-Clause License.
 ## Useful resources
 
 - [How to Train a GAN? Tips and tricks to make GANs work](https://github.com/soumith/ganhacks) by Soumith Chintala
-- [jaywalnut310/MelGAN-Pytorch](https://github.com/jaywalnut310/MelGAN-Pytorch) by Jaehyeon Kim
+- [Official MelGAN implementation by original authors](https://github.com/descriptinc/melgan-neurips)
