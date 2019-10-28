@@ -22,3 +22,8 @@ class ResStack(nn.Module):
         for layer in self.layers:
             x = x + layer(x)
         return x
+
+    def remove_weight_norm(self):
+        for layer in self.layers:
+            nn.utils.remove_weight_norm(layer[1])
+            nn.utils.remove_weight_norm(layer[3])
