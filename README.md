@@ -5,7 +5,7 @@ Unofficial PyTorch implementation of [MelGAN vocoder](https://arxiv.org/abs/1910
 
 - MelGAN is lighter, faster, and better at generalizing to unseen speakers than [WaveGlow](https://github.com/NVIDIA/waveglow).
 - This repository use identical mel-spectrogram function from [NVIDIA/tacotron2](https://github.com/NVIDIA/tacotron2), so this can be directly used to convert output from NVIDIA's tacotron2 into raw-audio.
-- TODO: Planning to publish pretrained model via [PyTorch Hub](https://pytorch.org/hub).
+- Pretrained model on LJSpeech-1.1 via [PyTorch Hub](https://pytorch.org/hub).
 
 ![](./assets/gd.png)
 
@@ -27,13 +27,31 @@ pip install -r requirements.txt
 - `python trainer.py -c [config yaml file] -n [name of the run]`
 - `tensorboard --logdir logs/`
 
+## Pretrained model
+
+Try with Google Colab: TODO
+
+```python
+import torch
+vocoder = torch.hub.load('seungwonpark/melgan', 'melgan')
+vocoder.eval()
+mel = torch.randn(1, 80, 234) # use your own mel-spectrogram here
+
+if torch.cuda.is_available():
+    vocoder = vocoder.cuda()
+    mel = mel.cuda()
+
+with torch.no_grad():
+    audio = vocoder.inference(mel)
+```
+
 ## Inference
 
 - `python inference.py -p [checkpoint path] -i [input mel path]`
 
 ## Results
 
-See audio samples at:  http://swpark.me/melgan/.
+See audio samples at: http://swpark.me/melgan/.
 
 ![](./assets/lj-tensorboard.png)
 

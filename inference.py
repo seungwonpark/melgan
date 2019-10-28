@@ -20,7 +20,7 @@ def main(args):
 
     model = Generator(hp.audio.n_mel_channels).cuda()
     model.load_state_dict(checkpoint['model_g'])
-    model.eval()
+    model.eval(inference=False)
 
     with torch.no_grad():
         for melpath in tqdm.tqdm(glob.glob(os.path.join(args.input_folder, '*.mel'))):
@@ -29,17 +29,7 @@ def main(args):
                 mel = mel.unsqueeze(0)
             mel = mel.cuda()
 
-            # pad input mel with zeros to cut artifact
-            # see https://github.com/seungwonpark/melgan/issues/8
-            zero = torch.full((1, hp.audio.n_mel_channels, 10), -11.5129).cuda()
-            mel = torch.cat((mel, zero), axis=2)
-
-            audio = model(mel)
-            audio = audio.squeeze() # collapse all dimension except time axis
-            audio = audio[:-(hp.audio.hop_length*10)]
-            audio = MAX_WAV_VALUE * audio
-            audio = audio.clamp(min=-MAX_WAV_VALUE, max=MAX_WAV_VALUE)
-            audio = audio.short()
+            audio = model.inference(mel)
             audio = audio.cpu().detach().numpy()
 
             out_path = melpath.replace('.mel', '_reconstructed_epoch%04d.wav' % checkpoint['epoch'])
