@@ -16,7 +16,7 @@ audio:
   n_mel_channels: 80
   segment_length: 16000
   pad_short: 2000
-  filter_length: 1024
+  filter_length: 1536
   hop_length: 256 # WARNING: this can't be changed.
   win_length: 1536
   sampling_rate: 22050

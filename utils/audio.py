@@ -11,11 +11,11 @@ class MelGen():
     def get_normalized_mel(self, x):
         x = librosa.feature.melspectrogram(
             y=x,
-            sr=self.hp.audio.sr,
-            n_fft=self.hp.audio.n_fft,
+            sr=self.hp.audio.sampling_rate,
+            n_fft=self.hp.audio.filter_length,
             hop_length=self.hp.audio.hop_length,
             win_length=self.hp.audio.win_length,
-            n_mels=self.hp.audio.n_mels
+            n_mels=self.hp.audio.n_mel_channels
         )
         x = self.pre_spec(x)
         return x
