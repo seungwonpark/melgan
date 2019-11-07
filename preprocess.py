@@ -5,19 +5,13 @@ import torch
 import argparse
 import numpy as np
 
-from utils.stft import TacotronSTFT
 from utils.hparams import HParam
 from utils.utils import read_wav_np
+from utils.audio import MelGen
 
 
 def main(hp, args):
-    stft = TacotronSTFT(filter_length=hp.audio.filter_length,
-                        hop_length=hp.audio.hop_length,
-                        win_length=hp.audio.win_length,
-                        n_mel_channels=hp.audio.n_mel_channels,
-                        sampling_rate=hp.audio.sampling_rate,
-                        mel_fmin=hp.audio.mel_fmin,
-                        mel_fmax=hp.audio.mel_fmax)
+    melgen = MelGen(hp)
 
     wav_files = glob.glob(os.path.join(args.data_path, '**', '*.wav'), recursive=True)
 
@@ -31,8 +25,9 @@ def main(hp, args):
             wav = np.pad(wav, (0, hp.audio.segment_length + hp.audio.pad_short - len(wav)), \
                     mode='constant', constant_values=0.0)
 
-        wav = torch.from_numpy(wav).unsqueeze(0)
-        mel = stft.mel_spectrogram(wav)
+        mel = melgen.get_normalized_mel(wav)
+
+        mel = torch.from_numpy(mel)
 
         melpath = wavpath.replace('.wav', '.mel')
         torch.save(mel, melpath)
