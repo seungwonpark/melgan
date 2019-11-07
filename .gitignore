@@ -4,6 +4,7 @@
 # configuration
 config/*
 !config/default.yaml
+!config/melnet.yaml
 
 # logs, checkpoints
 chkpt/
