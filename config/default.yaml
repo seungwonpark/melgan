@@ -1,4 +1,4 @@
-data: # root path of train/validation data (in absolute path)
+data: # root path of train/validation data (either relative/absoulte path is ok)
   train: ''
   validation: ''
 ---

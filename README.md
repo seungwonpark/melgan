@@ -24,7 +24,11 @@ pip install -r requirements.txt
 
 ## Train & Tensorboard
 
-- `python trainer.py -c [config yaml file] -n [name of the run]`
+- `python trainer.py -c [config yaml file] -n [name of the run]
+  - `cp config/default.yaml config/config.yaml` and then edit `config.yaml`
+  - Write down the root path of train/validation files to 2nd/3rd line.
+  - Each path should contain pairs of `*.wav` with corresponding (preprocessed) `*.mel` file.
+  - The data loader parses list of files within the path recursively.
 - `tensorboard --logdir logs/`
 
 ## Pretrained model
