@@ -8,11 +8,16 @@
 
 <body>
   <div>
-  	<h2>Audio samples from <a href="https://arxiv.org/abs/1910.06711">MelGAN</a> vocoder (Training in progress)</h2>
-    <p><i>Disclaimer: This is a third-party implementation. The original authors stated that they will be releasing their code soon.</i></p>
-  	<p><b>Implementation GitHub repo link:</b> <a href="https://github.com/seungwonpark/melgan">https://github.com/seungwonpark/melgan</a></p>
-    <p>Audio samples from original authors: <a href="https://melgan-neurips.github.io/">https://melgan-neurips.github.io/</a></p>
-    <br>
+  	<h2>Audio samples from <a href="https://arxiv.org/abs/1910.06711">MelGAN</a> vocoder</h2>
+    <p><i>Disclaimer: This is a third-party implementation.</i></p>
+    <ul>
+      <li><b>Implementation GitHub repo:</b> <a href="https://github.com/seungwonpark/melgan">https://github.com/seungwonpark/melgan</a></li>
+      <ul>
+        <li>Contains pretrained model compatible with <a href="https://github.com/NVIDIA/tacotron2">NVIDIA/tacotron2</a> on LJSpeech-1.1</li>
+      </ul>
+      <li>Audio samples from original authors: <a href="https://melgan-neurips.github.io/">https://melgan-neurips.github.io/</a></li>
+      <li>Official implementation: <a href="https://github.com/descriptinc/melgan-neurips">https://github.com/descriptinc/melgan-neurips</a></li>
+    </ul>
 
     <p>In summary, MelGAN can convert mel-spectrograms into raw audio at real-time on CPU,
       and it generalizes to unseen speakers with significantly fewer parameters than previous state-of-the-art,
@@ -20,7 +25,7 @@
     </p>
 
     <h2>LJSpeech-1.1</h2>
-    <p>All audios below are unseen during training. We split LJSpeech-1.1 into 9:1 for train/validation. </p>
+    <p>All audios below are unseen during training. We split LJSpeech-1.1 into 9:1 for train/validation. (Files with suffix "*5.wav" are for validation) </p>
     <table>
       <thead>
         <tr>
@@ -57,15 +62,6 @@
               <source src="audios/LJ001-0015_reconstructed_epoch0800.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata">
               <source src="audios/LJ014-0285_reconstructed_epoch0800.wav" type="audio/wav"></audio></td>
-        </tr>
-        <tr>
-          <td>Epoch 1350</td>
-          <td><audio controls class="audio-player" preload="metadata">
-              <source src="audios/LJ001-0005_reconstructed_epoch1350.wav" type="audio/wav"></audio></td>
-          <td><audio controls class="audio-player" preload="metadata">
-              <source src="audios/LJ001-0015_reconstructed_epoch1350.wav" type="audio/wav"></audio></td>
-          <td><audio controls class="audio-player" preload="metadata">
-              <source src="audios/LJ014-0285_reconstructed_epoch1350.wav" type="audio/wav"></audio></td>
         </tr>
         <tr>
           <td>Epoch 1600</td>
