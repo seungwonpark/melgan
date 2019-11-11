@@ -65,7 +65,7 @@ class Generator(nn.Module):
         # pad input mel with zeros to cut artifact
         # see https://github.com/seungwonpark/melgan/issues/8
         zero = torch.full((1, self.mel_channel, 10), -11.5129).to(mel.device)
-        mel = torch.cat((mel, zero), axis=2)
+        mel = torch.cat((mel, zero), dim=2)
 
         audio = self.forward(mel)
         audio = audio.squeeze() # collapse all dimension except time axis
