@@ -10,10 +10,12 @@ class ResStack(nn.Module):
 
         self.layers = nn.ModuleList([
             nn.Sequential(
-                nn.LeakyReLU(),
-                nn.utils.weight_norm(nn.Conv1d(channel, channel, kernel_size=3, dilation=3**i, padding=3**i)),
-                nn.LeakyReLU(),
-                nn.utils.weight_norm(nn.Conv1d(channel, channel, kernel_size=3, dilation=1, padding=1)),
+                nn.LeakyReLU(0.2),
+                nn.ReflectionPad1d(3**i),
+                nn.utils.weight_norm(nn.Conv1d(channel, channel, kernel_size=3, dilation=3**i)),
+                nn.LeakyReLU(0.2),
+                nn.ReflectionPad1d(1),
+                nn.utils.weight_norm(nn.Conv1d(channel, channel, kernel_size=3, dilation=1)),
             )
             for i in range(3)
         ])

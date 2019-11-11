@@ -14,30 +14,36 @@ class Generator(nn.Module):
         self.mel_channel = mel_channel
 
         self.generator = nn.Sequential(
-            nn.utils.weight_norm(nn.Conv1d(mel_channel, 512, kernel_size=7, stride=1, padding=3)),
+            nn.ReflectionPad1d(3),
+            nn.utils.weight_norm(nn.Conv1d(mel_channel, 512, kernel_size=7, stride=1)),
 
-            nn.LeakyReLU(),
-            nn.utils.weight_norm(nn.ConvTranspose1d(512, 256, kernel_size=16, stride=8, padding=4)),
+            nn.LeakyReLU(0.2),
+            nn.ReflectionPad1d(4),
+            nn.utils.weight_norm(nn.ConvTranspose1d(512, 256, kernel_size=16, stride=8)),
 
             ResStack(256),
 
-            nn.LeakyReLU(),
-            nn.utils.weight_norm(nn.ConvTranspose1d(256, 128, kernel_size=16, stride=8, padding=4)),
+            nn.LeakyReLU(0.2),
+            nn.ReflectionPad1d(4),
+            nn.utils.weight_norm(nn.ConvTranspose1d(256, 128, kernel_size=16, stride=8)),
 
             ResStack(128),
 
-            nn.LeakyReLU(),
-            nn.utils.weight_norm(nn.ConvTranspose1d(128, 64, kernel_size=4, stride=2, padding=1)),
+            nn.LeakyReLU(0.2),
+            nn.ReflectionPad1d(1),
+            nn.utils.weight_norm(nn.ConvTranspose1d(128, 64, kernel_size=4, stride=2)),
 
             ResStack(64),
 
-            nn.LeakyReLU(),
-            nn.utils.weight_norm(nn.ConvTranspose1d(64, 32, kernel_size=4, stride=2, padding=1)),
+            nn.LeakyReLU(0.2),
+            nn.ReflectionPad1d(1),
+            nn.utils.weight_norm(nn.ConvTranspose1d(64, 32, kernel_size=4, stride=2)),
 
             ResStack(32),
 
-            nn.LeakyReLU(),
-            nn.utils.weight_norm(nn.Conv1d(32, 1, kernel_size=7, stride=1, padding=3)),
+            nn.LeakyReLU(0.2),
+            nn.ReflectionPad1d(3),
+            nn.utils.weight_norm(nn.Conv1d(32, 1, kernel_size=7, stride=1)),
             nn.Tanh(),
         )
 
