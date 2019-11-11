@@ -5,7 +5,7 @@ from model.generator import Generator
 model_params = {
     'nvidia_tacotron2_LJ11_epoch3200': {
         'mel_channel': 80,
-        'model_url': 'https://github.com/seungwonpark/melgan/releases/download/v0.1-alpha/nvidia_tacotron2_LJ11_epoch3200.pt',
+        'model_url': 'https://github.com/seungwonpark/melgan/releases/download/v0.2-alpha/nvidia_tacotron2_LJ11_epoch3200_v02.pt',
     },
 }
 
