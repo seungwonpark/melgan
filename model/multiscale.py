@@ -16,7 +16,7 @@ class MultiScaleDiscriminator(nn.Module):
         
         self.pooling = nn.ModuleList(
             [Identity()] +
-            [nn.AvgPool1d(kernel_size=4, stride=2, padding=2) for _ in range(1, 3)]
+            [nn.AvgPool1d(kernel_size=4, stride=2, padding=1, count_include_pad=False) for _ in range(1, 3)]
         )
 
     def forward(self, x):
