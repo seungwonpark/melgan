@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .res_stack import ResStack
-#from res_stack import ResStack
+# from .res_stack import ResStack
+from res_stack import ResStack
 
 MAX_WAV_VALUE = 32768.0
 

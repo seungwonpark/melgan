@@ -20,7 +20,7 @@ class ResStack(nn.Module):
         ])
 
         self.shortcuts = nn.ModuleList([
-            nn.Conv1d(channel, channel, kernel_size=1)
+            nn.utils.weight_norm(nn.Conv1d(channel, channel, kernel_size=1))
             for i in range(3)
         ])
 
@@ -30,6 +30,7 @@ class ResStack(nn.Module):
         return x
 
     def remove_weight_norm(self):
-        for block in self.blocks:
+        for block, shortcut in zip(self.blocks, self.shortcuts):
             nn.utils.remove_weight_norm(block[1])
             nn.utils.remove_weight_norm(block[3])
+            nn.utils.remove_weight_norm(shortcut)
