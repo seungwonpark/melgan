@@ -4,6 +4,7 @@
 # configuration
 config/*
 !config/default.yaml
+temp-restore.yaml
 
 # logs, checkpoints
 chkpt/

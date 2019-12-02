@@ -3,14 +3,14 @@ import torch
 from model.generator import Generator
 
 model_params = {
-    'nvidia_tacotron2_LJ11_epoch3200': {
+    'nvidia_tacotron2_LJ11_epoch6400': {
         'mel_channel': 80,
-        'model_url': 'https://github.com/seungwonpark/melgan/releases/download/v0.2-alpha/nvidia_tacotron2_LJ11_epoch3200_v02.pt',
+        'model_url': 'https://github.com/seungwonpark/melgan/releases/download/v0.3-alpha/nvidia_tacotron2_LJ11_epoch6400.pt',
     },
 }
 
 
-def melgan(model_name='nvidia_tacotron2_LJ11_epoch3200', pretrained=True, progress=True):
+def melgan(model_name='nvidia_tacotron2_LJ11_epoch6400', pretrained=True, progress=True):
     params = model_params[model_name]
     model = Generator(params['mel_channel'])
 

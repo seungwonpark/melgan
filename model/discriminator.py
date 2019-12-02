@@ -9,28 +9,29 @@ class Discriminator(nn.Module):
 
         self.discriminator = nn.ModuleList([
             nn.Sequential(
-                nn.utils.weight_norm(nn.Conv1d(1, 16, kernel_size=15, stride=1, padding=7)),
-                nn.LeakyReLU(),
+                nn.ReflectionPad1d(7),
+                nn.utils.weight_norm(nn.Conv1d(1, 16, kernel_size=15, stride=1)),
+                nn.LeakyReLU(0.2, inplace=True),
             ),
             nn.Sequential(
                 nn.utils.weight_norm(nn.Conv1d(16, 64, kernel_size=41, stride=4, padding=20, groups=4)),
-                nn.LeakyReLU(),
+                nn.LeakyReLU(0.2, inplace=True),
             ),
             nn.Sequential(
                 nn.utils.weight_norm(nn.Conv1d(64, 256, kernel_size=41, stride=4, padding=20, groups=16)),
-                nn.LeakyReLU(),
+                nn.LeakyReLU(0.2, inplace=True),
             ),
             nn.Sequential(
                 nn.utils.weight_norm(nn.Conv1d(256, 1024, kernel_size=41, stride=4, padding=20, groups=64)),
-                nn.LeakyReLU(),
+                nn.LeakyReLU(0.2, inplace=True),
             ),
             nn.Sequential(
                 nn.utils.weight_norm(nn.Conv1d(1024, 1024, kernel_size=41, stride=4, padding=20, groups=256)),
-                nn.LeakyReLU(),
+                nn.LeakyReLU(0.2, inplace=True),
             ),
             nn.Sequential(
                 nn.utils.weight_norm(nn.Conv1d(1024, 1024, kernel_size=5, stride=1, padding=2)),
-                nn.LeakyReLU(),
+                nn.LeakyReLU(0.2, inplace=True),
             ),
             nn.utils.weight_norm(nn.Conv1d(1024, 1, kernel_size=3, stride=1, padding=1)),
         ])
@@ -58,3 +59,6 @@ if __name__ == '__main__':
     for feat in features:
         print(feat.shape)
     print(score.shape)
+
+    pytorch_total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(pytorch_total_params)
