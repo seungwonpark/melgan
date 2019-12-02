@@ -56,8 +56,9 @@ with torch.no_grad():
 ## Results
 
 See audio samples at: http://swpark.me/melgan/.
+Model was trained at V100 GPU for 14 days using LJSpeech-1.1.
 
-![](./assets/lj-tensorboard.png)
+![](./assets/lj-tensorboard-v0.3-alpha.png)
 
 
 ## Implementation Authors
