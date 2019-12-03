@@ -31,6 +31,6 @@ class ResStack(nn.Module):
 
     def remove_weight_norm(self):
         for block, shortcut in zip(self.blocks, self.shortcuts):
-            nn.utils.remove_weight_norm(block[1])
-            nn.utils.remove_weight_norm(block[3])
+            nn.utils.remove_weight_norm(block[2])
+            nn.utils.remove_weight_norm(block[4])
             nn.utils.remove_weight_norm(shortcut)
